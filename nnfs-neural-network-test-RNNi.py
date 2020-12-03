@@ -1,4 +1,5 @@
 #Code found here is based on Neural Networks from Scratch in Python, Chapter 19: https://nnfs.io/
+#Changes in the Code from the default file are found in lines 1068 thru 1138(I'm sure there is a much more efficient implementation of the RNNi data preparation.)
 
 import numpy as np
 import nnfs
