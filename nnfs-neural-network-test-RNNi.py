@@ -1062,76 +1062,32 @@ def load_mnist_dataset(dataset, path):
         # And for each image in given folder
         for file in os.listdir(os.path.join(path, dataset, label)):
             # Read the image
-            image = cv2.imread(
-                        os.path.join(path, dataset, label, file),
-                        cv2.IMREAD_UNCHANGED)
-            image_data=image
-            focus1 = image_data[12:16:, 12:16:]
-            focus1 = focus1.flatten()
-            f2_1 = np.round_(np.mean(image_data[10:12:, 10:12:]))
-            f2_2 = np.round_(np.mean(image_data[10:12:, 12:14:]))
-            f2_3 = np.round_(np.mean(image_data[10:12:, 14:16:]))
-            f2_4 = np.round_(np.mean(image_data[10:12:, 16:18:]))
-            f2_5 = np.round_(np.mean(image_data[12:14:, 10:12:]))
-            f2_6 = np.round_(np.mean(image_data[12:14:, 12:14:]))
-            f2_7 = np.round_(np.mean(image_data[12:14:, 14:16:]))
-            f2_8 = np.round_(np.mean(image_data[12:14:, 16:18:]))
-            f2_9 = np.round_(np.mean(image_data[14:16:, 10:12:]))
-            f2_10 = np.round_(np.mean(image_data[14:16:, 12:14:]))
-            f2_11 = np.round_(np.mean(image_data[14:16:, 14:16:]))
-            f2_12 = np.round_(np.mean(image_data[14:16:, 16:18:]))
-            f2_13 = np.round_(np.mean(image_data[16:18:, 10:12:]))
-            f2_14 = np.round_(np.mean(image_data[16:18:, 12:14:]))
-            f2_15 = np.round_(np.mean(image_data[16:18:, 14:16:]))
-            f2_16 = np.round_(np.mean(image_data[16:18:, 16:18:]))
-            focus2 = np.int_([f2_1, f2_2, f2_3, f2_4,
-                              f2_5, f2_6, f2_7, f2_8,
-                              f2_9, f2_10, f2_11, f2_12,
-                              f2_13, f2_14, f2_15, f2_16])
+            # fs = focus size, i.e. for 4x4 enter 4; dm is dimension size, i.e. the length and width of largest focus; lf= layers of focus
+            fs = 4
+            lf = 4
+            dm = 28
+            n = np.int_
+            r = cv2.resize
+            id = image
+            i = 0
+            fimage = 0
+            while i < lf:
+                p = n(dm / 2 - fs * 2 ** i / 2)
+                q = n(dm / 2 + fs * 2 ** i / 2)
+                if p < 0:
+                    j = id[0:dm:, 0:dm:]
+                else:
+                    j = id[p:q:, p:q:]
+                j = r(j, (fs, fs), interpolation=3)
+                j = j.flatten()
+                if np.isscalar(fimage):
+                    fimage = j
+                else:
+                    fimage = np.vstack((fimage, j))
 
-            f3_1 = np.round_(np.mean(image_data[6:10:, 6:10:]))
-            f3_2 = np.round_(np.mean(image_data[6:10:, 10:14:]))
-            f3_3 = np.round_(np.mean(image_data[6:10:, 14:18:]))
-            f3_4 = np.round_(np.mean(image_data[6:10:, 18:22:]))
-            f3_5 = np.round_(np.mean(image_data[10:14:, 6:10:]))
-            f3_6 = np.round_(np.mean(image_data[10:14:, 10:14:]))
-            f3_7 = np.round_(np.mean(image_data[10:14:, 14:18:]))
-            f3_8 = np.round_(np.mean(image_data[10:14:, 18:22:]))
-            f3_9 = np.round_(np.mean(image_data[14:18:, 6:10:]))
-            f3_10 = np.round_(np.mean(image_data[14:18:, 10:14:]))
-            f3_11 = np.round_(np.mean(image_data[14:18:, 14:18:]))
-            f3_12 = np.round_(np.mean(image_data[14:18:, 18:22:]))
-            f3_13 = np.round_(np.mean(image_data[18:22:, 6:10:]))
-            f3_14 = np.round_(np.mean(image_data[18:22:, 10:14:]))
-            f3_15 = np.round_(np.mean(image_data[18:22:, 14:18:]))
-            f3_16 = np.round_(np.mean(image_data[18:22:, 18:22:]))
-            focus3 = np.int_([f3_1, f3_2, f3_3, f3_4,
-                              f3_5, f3_6, f3_7, f3_8,
-                              f3_9, f3_10, f3_11, f3_12,
-                              f3_13, f3_14, f3_15, f3_16])
+                i += 1
 
-            f4_1 = np.round_(np.mean(image_data[0:7:, 0:7:]))
-            f4_2 = np.round_(np.mean(image_data[0:7:, 7:14:]))
-            f4_3 = np.round_(np.mean(image_data[0:7:, 14:21:]))
-            f4_4 = np.round_(np.mean(image_data[0:7:, 21:28:]))
-            f4_5 = np.round_(np.mean(image_data[7:14:, 0:7:]))
-            f4_6 = np.round_(np.mean(image_data[7:14:, 7:14:]))
-            f4_7 = np.round_(np.mean(image_data[7:14:, 14:21:]))
-            f4_8 = np.round_(np.mean(image_data[7:14:, 21:28:]))
-            f4_9 = np.round_(np.mean(image_data[14:21:, 0:7:]))
-            f4_10 = np.round_(np.mean(image_data[14:21:, 7:14:]))
-            f4_11 = np.round_(np.mean(image_data[14:21:, 14:21:]))
-            f4_12 = np.round_(np.mean(image_data[14:21:, 21:28:]))
-            f4_13 = np.round_(np.mean(image_data[21:28:, 0:7:]))
-            f4_14 = np.round_(np.mean(image_data[21:28:, 7:14:]))
-            f4_15 = np.round_(np.mean(image_data[21:28:, 14:21:]))
-            f4_16 = np.round_(np.mean(image_data[21:28:, 21:28:]))
-            focus4 = np.int_([f4_1, f4_2, f4_3, f4_4,
-                              f4_5, f4_6, f4_7, f4_8,
-                              f4_9, f4_10, f4_11, f4_12,
-                              f4_13, f4_14, f4_15, f4_16])
-
-            image = np.int_([focus1, focus2, focus3, focus4])
+            image = n(fimage)
             # And append it and a label to the lists
             X.append(image)
             y.append(label)
