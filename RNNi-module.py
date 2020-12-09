@@ -22,6 +22,9 @@ n = [np.int_, cv2.resize, np.isscalar, np.vstack, np.zeros, np.append, cv2.getRo
      cv2.warpAffine]
 id = image[0:fs[2]:, 0:fs[3]:]
 seed()
+X=[]
+y=[]
+label=1
 # number of looks per image
 while z < fs[5]:
 
