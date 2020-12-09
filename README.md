@@ -15,7 +15,7 @@ nnfs-neural-network-test-default.py - This is described in the paper.
 RNNi-module.py - This is exclusively the code which creates multiple "looks" per image. Parameters/ranges can be adjusted. These parameters will be randomized based on the ranges you specify: center of focus location, brightness, contrast, and rotation.  
 
 RNNi+RNNBrn-v2.py - This is an updated working classification neural network training program based on the most recent RNNi-module. Instructions:
-  1. You will need a folder in your python directory for storing images with subfolders as follows -> {names of subfolders:} test;train  -> {names of subfolders should be labeled 0 to n. for example, 0 1 2 3 for four unique classifiers}
+  1. You will need a folder in your python directory for storing images with subfolders as follows -> {names of subfolders:} test;train  -> {names of sub-subfolders should be labeled 0 to n. for example, for four unique classifiers use:} 0; 1; 2; 3
   2. Go to line 1140 to change the name of the folder to match that of your main folder storing images from step 1.
   3. Go to line 1070 thru 1077. You may need to adjust the parameters in fs[] based on the instructions in the comments on lines 1070-1075. 
   4. Go to line 1156 to define the number of nodes per hidden layer. 
