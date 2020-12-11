@@ -1090,7 +1090,8 @@ def load_mnist_dataset(dataset, path):
                 br = n[0]([b[0] * 255, b[1] * 255])
                 i = 0
                 fi = 0
-                rot = n[0]((fs[6]+1)-random() * (fs[6]+1)*2)
+                rot = n[0]((random() * 2 - 1) * (fs[6] + 1))
+                print(rot)
                 rotm = n[6]((fs[0] / 2, fs[0] / 2), rot, 1)
                 while i < fs[1]:
                     p = [n[0]((fs[2] - fs[0] * 2 ** i) / 2 + cf[0]), n[0]((fs[2] + fs[0] * 2 ** i) / 2 + cf[0]),
@@ -1106,14 +1107,15 @@ def load_mnist_dataset(dataset, path):
                     else:
                         fi = n[3]((fi, j))
                     if i == (fs[1] - 1):
-                        #random adjust brightness/contrast
-                        bt=n[0](random()*fs[7]-fs[7]/2)
-                        ct=n[0](random()*fs[8]-fs[8]/2)
-                        fi=n[0](fi*(ct/127+1) - ct+bt)
-                        #add final row with coordinates
+                        # random adjust brightness/contrast
+                        br = [random() * 2 - 1, random() * 2 - 1]
+                        bt = n[0](br[0] * fs[7])
+                        ct = n[0](br[1] * fs[8])
+                        fi = n[0](fi * (ct / 127 + 1) - ct + bt)
+                        # add final row with coordinates
                         k = n[4]((fs[4] * fs[0] ** 2 - 2, 1))
                         k = n[5](k, br)
-                        fi = n[3]((fi, k))
+                        fi = n[0](n[3]((fi, k)))
                     i += 1
                 image = fi
                 # And append it and a label to the lists
